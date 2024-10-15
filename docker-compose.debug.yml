@@ -1,0 +1,11 @@
+services:
+  app:
+    build:
+      context: .
+    ports:
+      - "8000:8000"  # Django server port
+      - "5678:5678"  # Debugger port for VS Code
+    volumes:
+      - ./app:/app
+    command: >
+      sh -c "pip install debugpy && python -m debugpy --wait-for-client --listen 0.0.0.0:5678 manage.py runserver 0.0.0.0:8000 --nothreading --noreload"
