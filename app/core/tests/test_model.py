@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 # Create your tests here.
 
-class UserModelCreatingTests(TestCase):
+class UserCreatingTests(TestCase):
     """ test creating user object in different scenarios"""
     
     
@@ -106,4 +106,16 @@ class UserModelCreatingTests(TestCase):
         # validation error should arise
         with self.assertRaises(TypeError):
             user = get_user_model().objects.create_user(**user_data)
-        
+    
+    
+    def test_create_superuser_pass(self):
+        """ create superuser """
+
+        user_data = {
+            'email':'moka@outlook.com',
+            'password':'rfshfshhfsf'
+        }
+
+        user = get_user_model().objects.create_superuser(**user_data)
+
+        self.assertTrue(user.is_superuser)
